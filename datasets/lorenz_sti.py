@@ -1,26 +1,21 @@
-# 生成洛伦兹动力系统的仿真数据
+# Generat simulation dataset for 90D coupled Lorenz system
 
 import numpy as np
 import pandas as pd
 from scipy.integrate import solve_ivp
 from scipy import special
-import gin
 np.random.seed(20230823)
 
 
 def lorenz(vars, t, pars=[10., 28., 8/3]):
     '''
-    洛伦兹动力系统：
+    Lorenz system eqution：
     dx/dt = p(y-x)
     dy/dt = x(q-z)-y
     dz/dt = xy-rz
 
-    Parameters：
-    ----------------------
-    vars：表示变量初始值;
-        类型：array
-    pars：表示超参；
-        类型：array
+    :param vars: initial value of variables;
+    :param pars: parameters of lorenz system;
     '''
     x, y, z = vars
     p, q, r = pars
@@ -29,10 +24,6 @@ def lorenz(vars, t, pars=[10., 28., 8/3]):
     dz_dt = x*y-r*z
     return np.array([dx_dt, dy_dt, dz_dt])
 
-# 定义96维耦合洛伦兹系统的演化函数
-
-
-@gin.configurable
 class lorenz_coupled():
     def __init__(self,
                  x: np.array,
@@ -49,14 +40,17 @@ class lorenz_coupled():
                  gamma: float = 0.1,
                  delta: float = 0.1):
         '''
-        x: initial value for generate curve
-        start: start point of integration range 
-        stop: end point of integration range
-        t: sample points
-        target: index of target value;
-        output_size: prediction steps;
-        noise: the variance of noise;
-        sigam, beta, rho ,gamma and delta: lorenz system parameters;
+        Coupled Lorenz system
+        
+        :param x: initial value of variables;
+        :param start: start point of integration range;
+        :param stop: end point of integration range;
+        :param t: sample point set;
+        :param target: index of target value;
+        :param input_size: input steps;
+        :param output_size: prediction steps;
+        :param noise: the variance of noise;
+        :param sigam, beta, rho ,gamma and delta: parameters of lorenz system;
         '''
         self.n = x.shape[0]
         self.target = int(target)
@@ -94,9 +88,7 @@ class lorenz_coupled():
 
     def __iter__(self):
         '''
-        return: 
-         X: "spatial dimension, input size"
-         y: "input size+output size"
+        :return: states X and target y for training and testing.
         '''
         self.index=0
         while True:
