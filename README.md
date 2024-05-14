@@ -19,6 +19,9 @@ Experiments to reproduce the paper results are located in `experiments/*`,
 where each experiment package contains `data/data_exp.py`. If you want to reproduce the results, 
 you can run the corresponding experiment package. For example, to reproduce the results for Lorenz experiment, 
 you can run the following command:
+
 `python ./experiments/lorenz/lorenz_exp.py`
+
 The refined experiments can be reproduced by running the following command:
+
 `python ./experiments/lorenz/lorenz_exp_refined.py  --refine --refine_model='STD'`
