@@ -27,3 +27,8 @@ The refined experiments can be reproduced by running the following command:
 `python ./experiments/lorenz/lorenz_exp_refined.py  --refine --refine_model='STD'`
 #### Results
 The `results` directory contains the pre-predictions of each model on each dataset.
+## Citation
+
+## Contact
+If you have any questions or want to use the code, please contact:
+- suliangyu0917@xjtu.edu.cn
