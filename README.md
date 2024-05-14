@@ -25,3 +25,5 @@ you can run the following command:
 The refined experiments can be reproduced by running the following command:
 
 `python ./experiments/lorenz/lorenz_exp_refined.py  --refine --refine_model='STD'`
+#### Results
+The `results` directory contains the pre-predictions of each model on each dataset.
