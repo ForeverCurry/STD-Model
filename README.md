@@ -21,7 +21,7 @@ The loaders for each dataset used in the paper are in `datasets/*.py`
 
 #### Experiments
 Experiments to reproduce the paper results are located in `experiments/*`, 
-where each experiment package contains `data/data_exp.py`. If you want to reproduce the results, 
+where each experiment package contains `<data>/<data>_exp.py`. If you want to reproduce the results, 
 you can run the corresponding experiment package. For example, to reproduce the results for Lorenz experiment, 
 you can run the following command:
 
@@ -30,7 +30,8 @@ you can run the following command:
 The refined experiments can be reproduced by running the following command:
 
 `python ./experiments/lorenz/lorenz_exp_refined.py  --refine --refine_model=RDE`
-The run commands for training each model are listed in run.sh.
+
+The run commands for training each model are listed in `run.sh`.
 
 #### Results
 The `results` directory contains the pre-predictions of each model on each dataset.
