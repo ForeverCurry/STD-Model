@@ -8,6 +8,7 @@ STD model is used for short-term high-dimension multi-step time series predictio
 
 ## Preparation
 Install pytorch and other necessary dependencies.
+
 `pip install -r requirements.txt`
 
 ## Repository Structure
