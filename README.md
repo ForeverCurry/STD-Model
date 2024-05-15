@@ -31,7 +31,7 @@ The refined experiments can be reproduced by running the following command:
 
 `python ./experiments/lorenz/lorenz_exp_refined.py  --refine --refine_model=RDE`
 
-The run commands for training each model are listed in `run.sh`.
+The run commands for reproducing the paper results are listed in `run.sh`.
 
 #### Results
 The `results` directory contains the pre-predictions of each model on each dataset.
