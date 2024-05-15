@@ -1,6 +1,5 @@
 argparse
 itertools
-fire
 matplotlib
 seaborn
 numpy
