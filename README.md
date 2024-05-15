@@ -30,8 +30,8 @@ you can run the following command:
 The refined experiments can be reproduced by running the following command:
 
 `python ./experiments/lorenz/lorenz_exp_refined.py  --refine --refine_model=RDE`
-### Training scripts
-We provide the STD experiment scripts and hyperparameters of all benchmark datasets under the folder`./scripts`. The run commands for training each model are listed in run.sh.
+The run commands for training each model are listed in run.sh.
+
 #### Results
 The `results` directory contains the pre-predictions of each model on each dataset.
 ## Citation
