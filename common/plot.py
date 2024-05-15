@@ -1,8 +1,6 @@
 import os
 import pandas as pd
 import numpy as np
-import seaborn as sns
-sns.set_style('white')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from common.ops import main_plot, plot_sub, con
@@ -54,8 +52,6 @@ def plot_result(paths:list, input_size:int, step:int, test_size:int,
             plot_sub(data, -2*(test_size-index[i][j]+1),input_size, step, 
                      PlotMeta.linewidth,axes[j+1+i*(cols+1)])
             con(axes[j+1+i*(cols+1)], axes[i+i*cols], (index[i][j]-1)*step, step)
-        pcc = np.corrcoef(pre,ground_truth)[0][1]
-        print(pcc)
     ### show and save the plot
 
     fig = plt.gcf()
