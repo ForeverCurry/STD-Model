@@ -4,7 +4,7 @@ from models.STD import STD, pre_exp, refine_exp
 from itertools import product
 from datasets.plankton import planktonDataset
 from common.sampler import Sampler
-
+from common.plot import plot_result
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 
 parser = argparse.ArgumentParser('plankton experiments')
