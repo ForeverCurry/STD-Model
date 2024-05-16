@@ -22,7 +22,7 @@ parser.add_argument('--val_size', type=int, default=20,
                     help='Size of validation set')
 parser.add_argument('--test_size', type=int, default=30,
                     help='Size of test set')
-parser.add_argument('--target', type=int, default=11,
+parser.add_argument('--target', type=list, default=[3, 11],
                     help='Index of target')
 parser.add_argument('--niters', type=int, default=100000,
                     help='Maximum number of iterations')
