@@ -64,7 +64,7 @@ if __name__ == '__main__':
         plot_result(path, args.input_size, args.output_size, args.test_size, [[5,25,35],[5,20,45]],
             titles,save_path='png\wind_result.pdf')
     else:
-        assert args.refine_model in ['ETS', 'Theta','Arima', 'MVE','RDE', 'ARNN']\
+        assert args.refine_model in ['ETS', 'Theta','Arima', 'MVE','RDE', 'ARNN']
         #### load data
         for target in args.target:
             if args.refine_model == 'MVE':
