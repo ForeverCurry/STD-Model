@@ -50,9 +50,9 @@ if __name__ == '__main__':
                         output_size = args.output_size, dataset=training_set, warm=True)
         
             # Cross validation
-            # hyper = product(args.lambda_1,args.lambda_2)
-            # best_par = exp.val(hyper,size=args.val_size)
-            best_par=[0.01,0.1]
+            hyper = product(args.lambda_1,args.lambda_2)
+            best_par = exp.val(hyper,size=args.val_size)
+
             # Test
             nrmse, pccs = exp.test(best_par, size=args.test_size+args.val_size, save=f'N{args.target+1}')
             ave_loss = sum(nrmse[-args.test_size:])/args.test_size
