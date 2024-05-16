@@ -29,7 +29,7 @@ you can run the following command:
 
 The refined experiments for ETS model can be reproduced by running the following command:
 
-`python ./experiments/lorenz/lorenz_exp_refined.py  --refine --refine_model=RDE`
+`python ./experiments/lorenz/lorenz_exp_refined.py  --refine --refine_model RDE`
 
 The run commands for reproducing the paper results are listed in `run.sh`.
 
