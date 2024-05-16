@@ -71,13 +71,13 @@ if __name__ == '__main__':
                 training_set = Sampler(train_set, args.input_size, args.output_size, target=target, train=False)
             else:
                 training_set = Sampler(train_set, args.input_size, args.output_size, target=target)
-        exp = refine_exp(target=args.target,in_feature=args.in_feature, input_size=args.input_size,
+            exp = refine_exp(target=args.target,in_feature=args.in_feature, input_size=args.input_size,
                     output_size = args.output_size, dataset=training_set, base_model=args.refine_model)
         
-        ### refine
-        nrmse, temp_nrmse, ref_pcc, temp_pcc = exp.test(size=args.test_size+args.val_size, save=False)
-        ref_loss = sum(nrmse[-args.test_size:])/args.test_size
-        temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
-        print(f'{dict[args.target]}: Model {args.refine_model}\n Original loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}')
+            ### refine
+            nrmse, temp_nrmse, ref_pcc, temp_pcc = exp.test(size=args.test_size+args.val_size, save=False)
+            ref_loss = sum(nrmse[-args.test_size:])/args.test_size
+            temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
+            print(f'{dict[args.target]}: Model {args.refine_model}\n Original loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}')
     
 
