@@ -1,7 +1,7 @@
 import os
 import argparse
 from models.STD import pre_exp,refine_exp
-from datasets.weather import weatherDataset
+from dataset.weather import weatherDataset
 from itertools import product
 from common.sampler import Sampler
 from common.plot import plot_result
@@ -28,10 +28,12 @@ parser.add_argument('--niters', type=int, default=100000,
                     help='Maximum number of iterations')
 parser.add_argument('--epsilon', type=float, default=1e-5,
                     help='Value of difference when training will be stopped')
+parser.add_argument('--warm',action='store_true', default=False,
+                    help='If true')
 parser.add_argument('--refine',action='store_true', default=False,
                     help='If true')
 parser.add_argument('--refine_model', type=str, default=None,
-                    help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'MVE', 'ARNN','RDE']")
+                    help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'MVE','ARNN','RDE']")
 args = parser.parse_args()
 
 
@@ -40,8 +42,7 @@ if __name__ == '__main__':
     # Training Set
     dataset = weatherDataset.load()
     training_set = dataset.to_numpy().T
-    training_set = Sampler(training_set, args.input_size, args.output_size, target=args.target,
-                            pretrain=False)
+
     if not args.refine:
         #### load data
         training_set = Sampler(training_set, args.input_size, args.output_size, target=args.target)
@@ -50,9 +51,9 @@ if __name__ == '__main__':
                     output_size = args.output_size, dataset=training_set, warm=args.warm)
         
         ### Cross validation
-        hyper = product(args.lambda_1,args.lambda_2)
-        best_par = exp.val(hyper,size=args.val_size)
-      
+        # hyper = product(args.lambda_1,args.lambda_2)
+        # best_par = exp.val(hyper,size=args.val_size)
+        best_par = [1,0.1]
         ### Test
         nrmse, pccs = exp.test(best_par, size=args.test_size+args.val_size, save='weather')
         ave_loss = sum(nrmse[-args.test_size:])/args.test_size
@@ -75,3 +76,4 @@ if __name__ == '__main__':
         ref_loss = sum(nrmse[-args.test_size:])/args.test_size
         temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
         print(f'Operative temperature: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}')
+    

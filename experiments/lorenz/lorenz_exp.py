@@ -1,8 +1,8 @@
 import numpy as np
 np.random.seed(230823)
-from models.STD import pre_exp,refine_exp
+from experiments.experiment import pre_exp,refine_exp
 from itertools import product
-from datasets.lorenz_sti import lorenz_coupled
+from dataset.lorenz_sti import lorenz_coupled
 from common.plot import plot_result
 import argparse
 import os
@@ -50,22 +50,23 @@ if __name__ == '__main__':
     if not args.refine:
         #### load data
         training_set = lorenz_coupled(x=init, t=t_eval, start=start, stop=stop, input_size=args.input_size, 
-                                  target=args.target, output_size=args.output_size, noise=args.noisy)
+                                  target=args.target, output_size=args.output_size,noise=args.noisy)
         exp = pre_exp(target=args.target,in_feature=args.in_feature, input_size=args.input_size,
                     output_size = args.output_size, dataset=training_set, warm =True)
         ### Validation
-        hyper = product(args.lambda_1,args.lambda_2)
-        best_par = exp.val(hyper,size=args.val_size)
-        
+        # hyper = product(args.lambda_1,args.lambda_2)
+        # best_par = exp.val(hyper,size=args.val_size)
+        best_par = [10, 1]
         ### Test
-        nrmse, pcc = exp.test(best_par, size=args.test_size+args.val_size, save=False)
+        nrmse, pccs = exp.test(best_par, size=args.test_size+args.val_size, save=f'Lorenz{args.noisy}')
         ave_loss = sum(nrmse[-args.test_size:])/args.test_size
-        ave_pcc = sum(pcc[-args.test_size:])/args.test_size
-        print(f'Target {args.target} of Lorenz:\nModel loss: {ave_loss}    |      Pearson Correlation Coefficient: {ave_pcc}')
+        ave_pcc = sum(pccs[-args.test_size:])/args.test_size
+        print(f'Target {args.target} of Lorenz:\nModel loss: {ave_loss:.4f}    |      PCC: {ave_pcc:.4f}')
         path = ['Lorenz\STD_Lorenz0.5.csv']
         title = ['Noisy Lorenz system']
         plot_result(path, args.input_size, args.output_size, args.test_size, [[5,17,25]],
                 title,save_path='png\lorenz_result.pdf')
+
     else:
         assert args.refine_model in ['ETS', 'Theta', 'Arima', 'MVE', 'RDE', 'ARNN']
         if args.refine_model == 'MVE':
@@ -78,7 +79,7 @@ if __name__ == '__main__':
                     output_size = args.output_size, dataset=training_set, base_model=args.refine_model)
         
         ### refine
-        nrmse, temp_nrmse = exp.test(size=args.test_size+args.val_size, save=False)
+        nrmse, temp_nrmse = exp.test(size=args.test_size+args.val_size, save=f'Lorenz{args.noisy}')
         ref_loss = sum(nrmse[-args.test_size:])/args.test_size
         temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
         print(f'Target {args.target} of Lorenz: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}')

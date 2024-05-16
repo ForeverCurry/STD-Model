@@ -1,8 +1,8 @@
 import os
 import argparse
-from models.STD import STD, pre_exp, refine_exp
+from experiments.experiment import pre_exp,refine_exp
 from itertools import product
-from datasets.plankton import planktonDataset
+from dataset.plankton import planktonDataset
 from common.sampler import Sampler
 from common.plot import plot_result
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
@@ -22,7 +22,7 @@ parser.add_argument('--val_size', type=int, default=20,
                     help='Size of validation set')
 parser.add_argument('--test_size', type=int, default=30,
                     help='Size of test set')
-parser.add_argument('--target', type=list, default=[3, 11],
+parser.add_argument('--target', type=list, default=[3,11],
                     help='Index of target')
 parser.add_argument('--niters', type=int, default=100000,
                     help='Maximum number of iterations')
@@ -31,7 +31,7 @@ parser.add_argument('--epsilon', type=float, default=1e-5,
 parser.add_argument('--refine',action='store_true', default=False,
                     help='If true')
 parser.add_argument('--refine_model', type=str, default=None,
-                    help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'MVE', 'ARNN','RDE']")
+                    help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'ARNN','RDE']")
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -40,8 +40,7 @@ if __name__ == '__main__':
     training_set = dataset
     columns = dataset.columns.values
     training_values = training_set.to_numpy().T
-    training_set = Sampler(training_values, args.input_size, args.output_size, args.target,
-                        pretrain=False)
+
     if not args.refine:
         #### Training model
         path = []
@@ -51,8 +50,9 @@ if __name__ == '__main__':
                         output_size = args.output_size, dataset=training_set, warm=True)
         
             # Cross validation
-            hyper = product(args.lambda_1,args.lambda_2)
-            best_par = exp.val(hyper,size=args.val_size)
+            # hyper = product(args.lambda_1,args.lambda_2)
+            # best_par = exp.val(hyper,size=args.val_size)
+            best_par=[0.01,0.1]
             # Test
             nrmse, pccs = exp.test(best_par, size=args.test_size+args.val_size, save=f'N{args.target+1}')
             ave_loss = sum(nrmse[-args.test_size:])/args.test_size
@@ -76,6 +76,5 @@ if __name__ == '__main__':
             ref_loss = sum(nrmse[-args.test_size:])/args.test_size
             temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
             print(f'target {target} of plankton: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}     |      refined loss: {ref_loss:.4f}')
-  
 
     
