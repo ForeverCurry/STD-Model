@@ -31,7 +31,7 @@ parser.add_argument('--epsilon', type=float, default=1e-5,
 parser.add_argument('--refine',action='store_true', default=False,
                     help='If true')
 parser.add_argument('--refine_model', type=str, default=None,
-                    help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'ARNN','RDE']")
+                    help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'MVE', 'ARNN','RDE']")
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -44,26 +44,38 @@ if __name__ == '__main__':
                         pretrain=False)
     if not args.refine:
         #### Training model
-        exp = pre_exp(model=STD,target=args.target,in_feature=args.in_feature, input_size=args.input_size,
+        path = []
+        for target in args.target:
+            training_set = Sampler(training_values, args.input_size, args.output_size, target)
+            exp = pre_exp(target=target, in_feature=args.in_feature, input_size=args.input_size,
                         output_size = args.output_size, dataset=training_set, warm=True)
         
-        # Cross validation
-        hyper = product(args.lambda_1,args.lambda_2)
-        best_par = exp.val(hyper,size=args.val_size)
-        # best_par=[0.01,0.1]
-        # Test
-        nrmse, pcc = exp.test(best_par, size=args.test_size+args.val_size, save=False)
-        ave_loss = sum(nrmse[-args.test_size:])/args.test_size
-        print(f'Average loss of target {args.target} of plankton is {ave_loss}')
+            # Cross validation
+            hyper = product(args.lambda_1,args.lambda_2)
+            best_par = exp.val(hyper,size=args.val_size)
+            # Test
+            nrmse, pccs = exp.test(best_par, size=args.test_size+args.val_size, save=f'N{args.target+1}')
+            ave_loss = sum(nrmse[-args.test_size:])/args.test_size
+            pcc = sum(pccs[-args.test_size:])/args.test_size
+            print(f'Average loss of target {target} of plankton is {ave_loss} and pcc is {pcc}')
+            path.append(f'./N{target+1}/STD_N{target+1}.csv')
+        titles = [f'PlanktonN{target+1}' for target in args.target]
+        plot_result(path, args.input_size, args.output_size, args.test_size, titles, './png/plankton.pdf')
     else:
-        assert args.refine_model in ['ETS', 'Theta', 'Arima', 'ARNN','RDE']
-        exp = refine_exp(target=args.target,in_feature=args.in_feature, input_size=args.input_size,
-                    output_size = args.output_size, dataset=training_set, base_model=args.refine_model)
-        
-        ### refine
-        nrmse, temp_nrmse, ref_pcc, temp_pcc = exp.test(size=args.test_size+args.val_size, save=False)
-        ref_loss = sum(nrmse[-args.test_size:])/args.test_size
-        temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
+        assert args.refine_model in ['ETS', 'Theta', 'Arima', 'MVE', 'ARNN','RDE']
+        for target in args.target:
+            if args.refine_model == 'MVE':
+                training_set = Sampler(training_values, args.input_size, args.output_size, target, train=False)
+            else:
+                training_set = Sampler(training_values, args.input_size, args.output_size, target)
+            exp = refine_exp(target=target,in_feature=args.in_feature, input_size=args.input_size,
+                        output_size = args.output_size, dataset=training_set, base_model=args.refine_model)
+            
+            ### refine
+            nrmse, temp_nrmse = exp.test(size=args.test_size+args.val_size, save=f'N{target+1}')
+            ref_loss = sum(nrmse[-args.test_size:])/args.test_size
+            temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
+            print(f'target {target} of plankton: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}     |      refined loss: {ref_loss:.4f}')
         print(f'target {args.target} of plankton: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}     |      refined loss: {ref_loss:.4f}\n Original PCC: {temp_pcc:.4f}     |      refined PCC: {ref_pcc:.4f}')
 
     
