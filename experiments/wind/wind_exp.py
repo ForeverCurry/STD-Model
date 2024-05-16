@@ -52,7 +52,7 @@ if __name__ == '__main__':
             ### Cross validation
             hyper = product(args.lambda_1,args.lambda_2)
             best_par = exp.val(hyper,size=args.val_size)
-            # best_par = [10,1]
+
             ### Test
             nrmse, pcc = exp.test(best_par, size=args.test_size+args.val_size, save=dict[args.target])
             ave_loss = sum(nrmse[-args.test_size:])/args.test_size
