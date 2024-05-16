@@ -31,7 +31,7 @@ parser.add_argument('--epsilon', type=float, default=1e-5,
 parser.add_argument('--refine',action='store_true', default=False,
                     help='If true')
 parser.add_argument('--refine_model', type=str, default=None,
-                    help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'ARNN','RDE']")
+                    help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'MVE', 'ARNN','RDE']")
 args = parser.parse_args()
 
 
