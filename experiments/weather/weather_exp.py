@@ -4,6 +4,7 @@ from models.STD import pre_exp,refine_exp
 from datasets.weather import weatherDataset
 from itertools import product
 from common.sampler import Sampler
+from common.plot import plot_result
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 
 parser = argparse.ArgumentParser('weather experiment')
@@ -42,26 +43,35 @@ if __name__ == '__main__':
     training_set = Sampler(training_set, args.input_size, args.output_size, target=args.target,
                             pretrain=False)
     if not args.refine:
+        #### load data
+        training_set = Sampler(training_set, args.input_size, args.output_size, target=args.target)
         #### Training model
         exp = pre_exp(target=args.target, in_feature=args.in_feature, input_size=args.input_size,
-                    output_size = args.output_size, dataset=training_set, warm=True)
+                    output_size = args.output_size, dataset=training_set, warm=args.warm)
         
         ### Cross validation
-        # hyper = product(args.lambda_1,args.lambda_2)
-        # best_par = exp.val(hyper,size=args.val_size)
-        best_par = [1,0.1]
+        hyper = product(args.lambda_1,args.lambda_2)
+        best_par = exp.val(hyper,size=args.val_size)
+      
         ### Test
-        nrmse, pcc = exp.test(best_par, size=args.test_size+args.val_size, save=False)
+        nrmse, pccs = exp.test(best_par, size=args.test_size+args.val_size, save='weather')
         ave_loss = sum(nrmse[-args.test_size:])/args.test_size
-        print(f'Average loss of operative temperature is {ave_loss}')
+        ave_pcc = sum(pccs[-args.test_size:])/args.test_size
+        print(f'Average loss of operative temperature is {ave_loss:.4f} and pcc is {ave_pcc:.4f}')
+        titles = [f'Operative temperature ']
+        plot_result('./weather/STD_weather.csv', args.input_size, args.output_size, args.test_size, titles, './png/plankton.pdf')
     else:
-        assert args.refine_model in ['ETS', 'Theta', 'Arima', 'RDE', 'ARNN']
+        assert args.refine_model in ['ETS', 'Theta', 'Arima', 'MVE', 'RDE', 'ARNN']
+        if args.refine_model == 'MVE':
+            training_set = Sampler(training_set, args.input_size, args.output_size, target=args.target,
+                                  train=False)
+        else:
+            training_set = Sampler(training_set, args.input_size, args.output_size, target=args.target)
         exp = refine_exp(target=args.target,in_feature=args.in_feature, input_size=args.input_size,
                     output_size = args.output_size, dataset=training_set, base_model=args.refine_model)
         
         ### refine
-        nrmse, temp_nrmse, ref_pcc, temp_pcc = exp.test(size=args.test_size+args.val_size, save=False)
+        nrmse, temp_nrmse = exp.test(size=args.test_size+args.val_size, save='weather')
         ref_loss = sum(nrmse[-args.test_size:])/args.test_size
         temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
-        print(f'Operative temperature: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}\nOriginal PCC: {temp_pcc:.4f}    |      refined PCC: {ref_pcc:.4f}')
-    
+        print(f'Operative temperature: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}')
