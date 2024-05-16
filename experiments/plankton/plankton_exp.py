@@ -76,6 +76,6 @@ if __name__ == '__main__':
             ref_loss = sum(nrmse[-args.test_size:])/args.test_size
             temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
             print(f'target {target} of plankton: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}     |      refined loss: {ref_loss:.4f}')
-        print(f'target {args.target} of plankton: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}     |      refined loss: {ref_loss:.4f}\n Original PCC: {temp_pcc:.4f}     |      refined PCC: {ref_pcc:.4f}')
+  
 
     
