@@ -38,23 +38,38 @@ if __name__ == '__main__':
     # Training Set
     dataset = WindDataset.load()
     training_set = dataset.to_numpy().T
-    training_set = Sampler(training_set, args.input_size, args.output_size, target=args.target)
+
     dict = {105:'Osaka', 24:'Fukushima'}
     if not args.refine:
-        #### Training model
-        exp = pre_exp(target=args.target,in_feature=args.in_feature, input_size=args.input_size,
-                        output_size = args.output_size,dataset=training_set, warm=True)
-        
-        ### Cross validation
-        hyper = product(args.lambda_1,args.lambda_2)
-        best_par = exp.val(hyper,size=args.val_size)
-        # best_par = [1,0.1]
-        ### Test
-        nrmse, pcc = exp.test(best_par, size=args.test_size+args.val_size, save=False)
-        ave_loss = sum(nrmse[-args.test_size:])/args.test_size
-        print(f'Average loss of {dict[args.target]} is {ave_loss}')
+        path = []
+        for target in args.target:
+            #### Load data
+            training_set = Sampler(training_set, args.input_size, args.output_size, target=target)
+            #### Training model
+            exp = pre_exp(target=args.target,in_feature=args.in_feature, input_size=args.input_size,
+                            output_size = args.output_size,dataset=training_set, warm=True)
+            
+            ### Cross validation
+            hyper = product(args.lambda_1,args.lambda_2)
+            best_par = exp.val(hyper,size=args.val_size)
+            # best_par = [10,1]
+            ### Test
+            nrmse, pcc = exp.test(best_par, size=args.test_size+args.val_size, save=dict[args.target])
+            ave_loss = sum(nrmse[-args.test_size:])/args.test_size
+            print(f'Average loss of {dict[args.target]} is {ave_loss}')
+            path.append(f'.\{dict[target]}\STD_{dict[target]}.csv')
+        ### Plot results
+        titles = ['Osaka wind speed','Fukushima wind speed']
+        plot_result(path, args.input_size, args.output_size, args.test_size, [[5,25,35],[5,20,45]],
+            titles,save_path='png\wind_result.pdf')
     else:
-        assert args.refine_model in ['ETS', 'Theta', 'Arima', 'RDE', 'ARNN']
+        assert args.refine_model in ['ETS', 'Theta','Arima', 'MVE','RDE', 'ARNN']\
+        #### load data
+        for target in args.target:
+            if args.refine_model == 'MVE':
+                training_set = Sampler(train_set, args.input_size, args.output_size, target=target, train=False)
+            else:
+                training_set = Sampler(train_set, args.input_size, args.output_size, target=target)
         exp = refine_exp(target=args.target,in_feature=args.in_feature, input_size=args.input_size,
                     output_size = args.output_size, dataset=training_set, base_model=args.refine_model)
         
