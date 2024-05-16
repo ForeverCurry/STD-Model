@@ -3,6 +3,7 @@ np.random.seed(230823)
 from models.STD import pre_exp,refine_exp
 from itertools import product
 from datasets.lorenz_sti import lorenz_coupled
+from common.plot import plot_result
 import argparse
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
@@ -44,10 +45,12 @@ if __name__ == '__main__':
     step = float(0.02)
     init = np.random.uniform(-5, 5, args.in_feature)
     t_eval = np.arange(start, stop, step)
-    training_set = lorenz_coupled(x=init, t=t_eval, start=start, stop=stop, input_size=args.input_size, 
-                                  target=args.target, output_size=args.output_size,noise=args.noisy)
+    
 
     if not args.refine:
+        #### load data
+        training_set = lorenz_coupled(x=init, t=t_eval, start=start, stop=stop, input_size=args.input_size, 
+                                  target=args.target, output_size=args.output_size, noise=args.noisy)
         exp = pre_exp(target=args.target,in_feature=args.in_feature, input_size=args.input_size,
                     output_size = args.output_size, dataset=training_set, warm =True)
         ### Validation
@@ -59,17 +62,26 @@ if __name__ == '__main__':
         ave_loss = sum(nrmse[-args.test_size:])/args.test_size
         ave_pcc = sum(pcc[-args.test_size:])/args.test_size
         print(f'Target {args.target} of Lorenz:\nModel loss: {ave_loss}    |      Pearson Correlation Coefficient: {ave_pcc}')
-
+        path = ['Lorenz\STD_Lorenz0.5.csv']
+        title = ['Noisy Lorenz system']
+        plot_result(path, args.input_size, args.output_size, args.test_size, [[5,17,25]],
+                title,save_path='png\lorenz_result.pdf')
     else:
         assert args.refine_model in ['ETS', 'Theta', 'Arima', 'RDE', 'ARNN']
+        if args.refine_model == 'MVE':
+            training_set = lorenz_coupled(x=init, t=t_eval, start=start, stop=stop, input_size=args.input_size, 
+                                  target=args.target, output_size=args.output_size,noise=args.noisy,train=False)
+        else:
+            training_set = lorenz_coupled(x=init, t=t_eval, start=start, stop=stop, input_size=args.input_size, 
+                                  target=args.target, output_size=args.output_size,noise=args.noisy)
         exp = refine_exp(target=args.target,in_feature=args.in_feature, input_size=args.input_size,
                     output_size = args.output_size, dataset=training_set, base_model=args.refine_model)
         
         ### refine
-        nrmse, temp_nrmse, pcc, temp_pcc = exp.test(size=args.test_size+args.val_size, save=False)
+        nrmse, temp_nrmse = exp.test(size=args.test_size+args.val_size, save=False)
         ref_loss = sum(nrmse[-args.test_size:])/args.test_size
         temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
-        print(f'Target {args.target} of Lorenz: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}\n Original PCC: {temp_pcc:.4f}    |      refined PCC: {pcc:.4f}')
+        print(f'Target {args.target} of Lorenz: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}')
         
         
     
