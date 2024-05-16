@@ -54,9 +54,9 @@ if __name__ == '__main__':
         exp = pre_exp(target=args.target,in_feature=args.in_feature, input_size=args.input_size,
                     output_size = args.output_size, dataset=training_set, warm =True)
         ### Validation
-        # hyper = product(args.lambda_1,args.lambda_2)
-        # best_par = exp.val(hyper,size=args.val_size)
-        best_par = [10, 1]
+        hyper = product(args.lambda_1,args.lambda_2)
+        best_par = exp.val(hyper,size=args.val_size)
+
         ### Test
         nrmse, pccs = exp.test(best_par, size=args.test_size+args.val_size, save=f'Lorenz{args.noisy}')
         ave_loss = sum(nrmse[-args.test_size:])/args.test_size
