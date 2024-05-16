@@ -4,6 +4,7 @@ from models.STD import pre_exp,refine_exp
 from datasets.wind import WindDataset
 from itertools import product
 from common.sampler import Sampler
+from common.plot import plot_result
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 
 parser = argparse.ArgumentParser('weather experiment')
@@ -21,7 +22,7 @@ parser.add_argument('--val_size', type=int, default=50,
                     help='Size of validation set')
 parser.add_argument('--test_size', type=int, default=50,
                     help='Size of test set')
-parser.add_argument('--target', type=int, default=24,
+parser.add_argument('--target', type=list, default=[24, 105],
                     help='Index of target')
 parser.add_argument('--niters', type=int, default=100000,
                     help='Maximum number of iterations')
@@ -30,7 +31,7 @@ parser.add_argument('--epsilon', type=float, default=1e-5,
 parser.add_argument('--refine',action='store_true', default=False,
                     help='If true')
 parser.add_argument('--refine_model', type=str, default=None,
-                    help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'RDE', 'ARNN']")
+                    help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'MVE', 'RDE', 'ARNN']")
 args = parser.parse_args()
 
 
@@ -77,6 +78,6 @@ if __name__ == '__main__':
         nrmse, temp_nrmse, ref_pcc, temp_pcc = exp.test(size=args.test_size+args.val_size, save=False)
         ref_loss = sum(nrmse[-args.test_size:])/args.test_size
         temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
-        print(f'{dict[args.target]}: Model {args.refine_model}\n Original loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}\n Original PCC: {temp_pcc:.4f}    |      refined PCC: {ref_pcc:.4f}')
+        print(f'{dict[args.target]}: Model {args.refine_model}\n Original loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}')
     
 
