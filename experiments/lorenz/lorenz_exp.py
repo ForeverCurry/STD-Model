@@ -35,7 +35,7 @@ parser.add_argument('--epsilon', type=float, default=1e-5,
 parser.add_argument('--refine',action='store_true', default=False,
                     help='If true')
 parser.add_argument('--refine_model', type=str, default=None,
-                    help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'RDE', 'ARNN']")
+                    help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'MVE', 'RDE', 'ARNN']")
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -67,7 +67,7 @@ if __name__ == '__main__':
         plot_result(path, args.input_size, args.output_size, args.test_size, [[5,17,25]],
                 title,save_path='png\lorenz_result.pdf')
     else:
-        assert args.refine_model in ['ETS', 'Theta', 'Arima', 'RDE', 'ARNN']
+        assert args.refine_model in ['ETS', 'Theta', 'Arima', 'MVE', 'RDE', 'ARNN']
         if args.refine_model == 'MVE':
             training_set = lorenz_coupled(x=init, t=t_eval, start=start, stop=stop, input_size=args.input_size, 
                                   target=args.target, output_size=args.output_size,noise=args.noisy,train=False)
