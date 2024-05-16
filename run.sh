@@ -4,20 +4,14 @@ python3 ./experiments/lorenz/lorenz_exp.py  --noise 0.5 --input_size 27
 
 ## Real-world data experiments ##
 
-#### Osaka wind data ####
-python3 ./experiments/wind/wind_exp.py  --target 105
-
-#### Fukushima wind data ####
-python3 ./experiments/wind/wind_exp.py  --target 24
+#### wind data ####
+python3 ./experiments/wind/wind_exp.py  
 
 #### Operative temperature data ####
 python3 ./experiments/weather/weather_exp.py  --target 15
 
-#### Plankton N4 data ####
-python3 ./experiments/plankton/plankton_exp.py  --target 3
-
-#### plankton N12 data ####
-python3 ./experiments/plankton/plankton_exp.py  --target 11
+#### Plankton data ####
+python3 ./experiments/plankton/plankton_exp.py 
 
 ## refine experiments ##
 
@@ -33,33 +27,23 @@ python3 ./experiments/lorenz/lorenz_exp.py  --noise 0.5 --input_size 27 --refine
 python3 ./experiments/lorenz/lorenz_exp.py  --noise 0.5 --input_size 27 --refine --refine_model ARNN
 ###### refine RDE model #### 
 python3 ./experiments/lorenz/lorenz_exp.py  --noise 0.5 --input_size 27 --refine --refine_model RDE
+###### refine MVE model #### 
+python3 ./experiments/lorenz/lorenz_exp.py  --noise 0.5 --input_size 27 --refine --refine_model MVE
 
-#### Osaka wind data ####
-
-###### refine ETS model ######
-python3 ./experiments/wind/wind_exp.py  --target 105 --refine --refine_model ETS
-###### refine ARIMA model #### 
-python3 ./experiments/wind/wind_exp.py  --target 105 --refine --refine_model ARIMA
-###### refine Theta model #### 
-python3 ./experiments/wind/wind_exp.py  --target 105 --refine --refine_model Theta 
-###### refine ARNN model #### 
-python3 ./experiments/wind/wind_exp.py  --target 105 --refine --refine_model ARNN 
-###### refine RDE model #### 
-python3 ./experiments/wind/wind_exp.py  --target 105 --refine --refine_model RDE
-
-#### Fukushima wind data ####
+#### wind data ####
 
 ###### refine ETS model ######
-python3 ./experiments/wind/wind_exp.py  --target 24 --refine --refine_model ETS   
+python3 ./experiments/wind/wind_exp.py   --refine --refine_model ETS
 ###### refine ARIMA model #### 
-python3 ./experiments/wind/wind_exp.py  --target 24 --refine --refine_model ARIMA 
+python3 ./experiments/wind/wind_exp.py   --refine --refine_model ARIMA
 ###### refine Theta model #### 
-python3 ./experiments/wind/wind_exp.py  --target 24 --refine --refine_model Theta 
+python3 ./experiments/wind/wind_exp.py   --refine --refine_model Theta 
 ###### refine ARNN model #### 
-python3 ./experiments/wind/wind_exp.py  --target 24 --refine --refine_model ARNN
+python3 ./experiments/wind/wind_exp.py   --refine --refine_model ARNN 
 ###### refine RDE model #### 
-python3 ./experiments/wind/wind_exp.py  --target 24 --refine --refine_model RDE
-
+python3 ./experiments/wind/wind_exp.py   --refine --refine_model RDE
+###### refine MVE model #### 
+python3 ./experiments/wind/wind_exp.py   --refine --refine_model MVE
 
 #### Operative temperature data ####
 
@@ -73,29 +57,19 @@ python3 ./experiments/weather/weather_exp.py  --target 15 --refine --refine_mode
 python3 ./experiments/weather/weather_exp.py  --target 15 --refine --refine_model ARNN 
 ###### refine RDE model #### 
 python3 ./experiments/weather/weather_exp.py  --target 15 --refine --refine_model RDE 
-
-#### Plankton N4 data ####
+###### refine MVE model #### 
+python3 ./experiments/weather/weather_exp.py  --target 15 --refine --refine_model MVE
+#### Plankton data ####
 
 ###### refine ETS model ######
-python3 ./experiments/plankton/plankton_exp.py  --target 3 --refine --refine_model ETS   
+python3 ./experiments/plankton/plankton_exp.py   --refine --refine_model ETS   
 ###### refine ARIMA model #### 
-python3 ./experiments/plankton/plankton_exp.py  --target 3 --refine --refine_model ARIMA 
+python3 ./experiments/plankton/plankton_exp.py   --refine --refine_model ARIMA 
 ###### refine Theta model #### 
-python3 ./experiments/plankton/plankton_exp.py  --target 3 --refine --refine_model Theta
+python3 ./experiments/plankton/plankton_exp.py   --refine --refine_model Theta
 ###### refine ARNN model #### 
-python3 ./experiments/plankton/plankton_exp.py  --target 3 --refine --refine_model ARNN 
+python3 ./experiments/plankton/plankton_exp.py   --refine --refine_model ARNN 
 ###### refine RDE model ###### 
-python3 ./experiments/plankton/plankton_exp.py  --target 3 --refine --refine_model RDE     
-
-#### plankton N12 data ####
-
-###### refine ETS model ######
-python3 ./experiments/plankton/plankton_exp.py  --target 11 --refine --refine_model ETS   
-###### refine ARIMA model ######
-python3 ./experiments/plankton/plankton_exp.py  --target 11 --refine --refine_model ARIMA 
-###### refine Theta model ######
-python3 ./experiments/plankton/plankton_exp.py  --target 11 --refine --refine_model Theta
-###### refine ARNN model ##### 
-python3 ./experiments/plankton/plankton_exp.py  --target 11 --refine --refine_model ARNN
-###### refine RDE model ##### 
-python3 ./experiments/plankton/plankton_exp.py  --target 11 --refine --refine_model RDE  
+python3 ./experiments/plankton/plankton_exp.py   --refine --refine_model RDE     
+###### refine MVE model #### 
+python3 ./experiments/plankton/plankton_exp.py   --refine --refine_model MVE
