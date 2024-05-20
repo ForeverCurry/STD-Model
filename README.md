@@ -34,7 +34,7 @@ The refined experiments for ETS model can be reproduced by running the following
 The run commands for reproducing the paper results are listed in `run.sh`.
 
 #### Results
-The `results` directory contains the pre-predictions of each model on each dataset and refinement results by STD model.
+The `results` directory contains the pre-predictions of each model on each dataset and refinement results by STD model. The run commands for reproducing the paper and SI figures are listed in `plot.sh`.
 ## Citation
 
 ## Contact
