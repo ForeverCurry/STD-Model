@@ -1,4 +1,5 @@
 #### Refine results plot
+python ./common/Plot/refine_plot.py -d Lorenz -i 27 -o 12 -id 25 -id 35 -id 45 
 
 python ./common/Plot/refine_plot.py -d weather -i 14 -o 6 -id 25 -id 35 -id 45 
 
