@@ -224,7 +224,8 @@ class refine_exp(Experiment):
                                 out_size = self.output_size, lambda_1=hyper_list[0],
                                 lambda_2 = hyper_list[1]).float()
         ref_pres = []
-        # temp_pres = []
+        pccs = []
+        temp_pccs = []
         losses = []
         temp_losses = []
         self.dataset.reset()
@@ -234,6 +235,10 @@ class refine_exp(Experiment):
             ref_pres.append(y_temp)
             ref_pres.append(hat_y.detach().numpy())
             loss = nrmse_loss(hat_y[-self.output_size:],test_y)
+            pcc = pearson(hat_y[-self.output_size:],test_y)
+            temp_pcc = pearson(y_temp[-self.output_size:],test_y)
+            pccs.append(pcc)
+            temp_pccs.append(temp_pcc)
             losses.append(loss)
             temp_losses.append(temp_loss)
             print(f'Refined loss:{loss:.4f}   |   Original loss:{temp_loss:.4f}')
@@ -241,5 +246,5 @@ class refine_exp(Experiment):
                 if save != None:
                     ref_pres = pd.DataFrame(data=ref_pres)
                     ref_pres.to_csv(f'./results/{self.base_model}_ref_{save}.csv',index=False)
-                return losses, temp_losses
+                return losses, temp_losses, pccs, temp_pccs 
             

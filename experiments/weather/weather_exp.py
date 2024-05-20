@@ -1,10 +1,10 @@
 import os
 import argparse
-from models.STD import pre_exp,refine_exp
+from experiments.experiment import pre_exp,refine_exp
 from dataset.weather import weatherDataset
 from itertools import product
 from common.sampler import Sampler
-from common.plot import plot_result
+from common.Plot.plot import plot_result
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 
 parser = argparse.ArgumentParser('weather experiment')
@@ -53,6 +53,7 @@ if __name__ == '__main__':
         ### Cross validation
         hyper = product(args.lambda_1,args.lambda_2)
         best_par = exp.val(hyper,size=args.val_size)
+
         ### Test
         nrmse, pccs = exp.test(best_par, size=args.test_size+args.val_size, save='weather')
         ave_loss = sum(nrmse[-args.test_size:])/args.test_size

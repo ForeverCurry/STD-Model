@@ -3,7 +3,7 @@ np.random.seed(230823)
 from experiments.experiment import pre_exp,refine_exp
 from itertools import product
 from dataset.lorenz_sti import lorenz_coupled
-from common.plot import plot_result
+from common.Plot.plot import plot_result
 import argparse
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
@@ -79,10 +79,15 @@ if __name__ == '__main__':
                     output_size = args.output_size, dataset=training_set, base_model=args.refine_model)
         
         ### refine
-        nrmse, temp_nrmse = exp.test(size=args.test_size+args.val_size, save=f'Lorenz{args.noisy}')
+        # nrmse, temp_nrmse = exp.test(size=args.test_size+args.val_size, save=f'Lorenz{args.noisy}')
+        nrmse, temp_nrmse , pccs, temp_pccs = exp.test(size=args.test_size+args.val_size)
         ref_loss = sum(nrmse[-args.test_size:])/args.test_size
         temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
-        print(f'Target {args.target} of Lorenz: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}')
+        pcc = sum(pccs[-args.test_size:])/args.test_size
+        temp_pcc = sum(temp_pccs[-args.test_size:])/args.test_size
+        print(f'Target {args.target} of Lorenz: Model {args.refine_model}\
+              \nOriginal loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}\
+              \nOriginal PCC: {temp_pcc:.4f}    |      refined PCC: {pcc:.4f}')
         
         
     

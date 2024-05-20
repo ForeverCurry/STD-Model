@@ -4,7 +4,7 @@ from experiments.experiment import pre_exp,refine_exp
 from dataset.wind import WindDataset
 from itertools import product
 from common.sampler import Sampler
-from common.plot import plot_result
+from common.Plot.plot import plot_result
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 
 parser = argparse.ArgumentParser('weather experiment')
@@ -22,7 +22,7 @@ parser.add_argument('--val_size', type=int, default=50,
                     help='Size of validation set')
 parser.add_argument('--test_size', type=int, default=50,
                     help='Size of test set')
-parser.add_argument('--target', type=list, default=[24,105],
+parser.add_argument('--target', nargs='+', type=int, default=[24,105],
                     help='Index of target')
 parser.add_argument('--niters', type=int, default=100000,
                     help='Maximum number of iterations')
@@ -43,6 +43,7 @@ if __name__ == '__main__':
     
     if not args.refine:
         path = []
+        print(args.target)
         for target in args.target:
             #### Load data
             training_set = Sampler(train_set, args.input_size, args.output_size, target=target)
@@ -55,9 +56,9 @@ if __name__ == '__main__':
             best_par = exp.val(hyper,size=args.val_size)
 
             ### Test
-            nrmse, pcc = exp.test(best_par, size=args.test_size+args.val_size, save=dict[args.target])
+            nrmse, pcc = exp.test(best_par, size=args.test_size+args.val_size, save=dict[target])
             ave_loss = sum(nrmse[-args.test_size:])/args.test_size
-            print(f'Average loss of {dict[args.target]} is {ave_loss}')
+            print(f'Average loss of {dict[target]} is {ave_loss}')
             path.append(f'.\{dict[target]}\STD_{dict[target]}.csv')
         ### Plot results
         titles = ['Osaka wind speed','Fukushima wind speed']

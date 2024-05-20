@@ -4,7 +4,7 @@ from experiments.experiment import pre_exp,refine_exp
 from itertools import product
 from dataset.plankton import planktonDataset
 from common.sampler import Sampler
-from common.plot import plot_result
+from common.Plot.plot import plot_result
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 
 parser = argparse.ArgumentParser('plankton experiments')
@@ -22,7 +22,7 @@ parser.add_argument('--val_size', type=int, default=20,
                     help='Size of validation set')
 parser.add_argument('--test_size', type=int, default=30,
                     help='Size of test set')
-parser.add_argument('--target', type=list, default=[3,11],
+parser.add_argument('--target', nargs='+',type=int, default=[3,11],
                     help='Index of target')
 parser.add_argument('--niters', type=int, default=100000,
                     help='Maximum number of iterations')
