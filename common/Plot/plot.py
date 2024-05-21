@@ -10,14 +10,16 @@ from dataclasses import dataclass
 @dataclass
 class PlotMeta:
     color= {'std':'#f16c23',
+            'std_fit':'#e11e2d',
             'gt':'#1b7c3d',
             'tr':'#2b6a99',
             'other':'#BFB1D0'}
     label = ['STD Predictions', 
             'True Values']
-    title_font = {'family': 'Serif', 'color':  'black', 'size': 14}
+    title_font = {'family': 'Serif', 'color':  'black', 'size': 24}
     tick_font = {'family': 'Serif', 'color':  'black', 'size': 6}
-    linewidth = 1
+    linewidth = 6
+    markersize = 20
 
 def plot_result(paths:list, input_size:int, step:int, test_size:int, 
                 index:list, titles:list, save_path:str):

@@ -15,7 +15,7 @@ parser.add_argument('-id', '--index', action='append', type=int,required=True, h
 args = parser.parse_args()
 
 title_font = {'family': 'serif', 'color':  'black'}
-subtitle_font = {'family': 'serif', 'color':  'black', 'size': 10}
+subtitle_font = {'family': 'serif', 'color':  'black', 'size': 9}
 
 sns.set_style('white')
 sns.set_palette('Set1')
@@ -34,7 +34,7 @@ def refine_plot(data, input_size, output_size, index:list, linewidth:float=1.5):
 
     label = ['ETS', 'ARIMA', 'Theta', 'MVE', 'ARNN','RDE']
 
-    fig, axes = plt.subplots(6, 3, figsize=(15, 30))
+    fig, axes = plt.subplots(6, 3, figsize=(10, 30))
 
     for k,result in enumerate(dataset):
         for i, id in enumerate(index):
@@ -52,14 +52,17 @@ def refine_plot(data, input_size, output_size, index:list, linewidth:float=1.5):
         
             axes[k,i].set_title(f'{label[k]} NRMSE:{nrmse:.2f} and refined NRMSE:{ref_nrmse:.2f}',fontdict=subtitle_font)
             axes[k,i].yaxis.set_visible(False)
-            axes[k,i].legend(prop={'size':6,'family':'Serif'},
-                        fancybox=True, shadow=True, ncol=3)
+            # axes[k,i].legend(prop={'size':6,'family':'Serif'},
+            #             fancybox=True, shadow=True, ncol=3)
+            axes[k,i].get_legend().set_visible(False)
             axes[k,i].set_xlim(xmin=0,xmax=input_size+output_size-1)
             axes[k,i].axvspan(0,input_size, color='blue', alpha=0.05)
+    handles, labels = axes[0,0].get_legend_handles_labels() 
+    fig.legend(handles, ['Groudtruth', 'Base', '+STD'], loc='lower center', ncol=5, prop={'size': 10, 'family': 'Serif'}, fancybox=True, shadow=True)
     fig.suptitle(f'Refined Results on {data} dataset', fontdict=title_font,size=16)
-    plt.tight_layout(w_pad=2, h_pad=5)
+    plt.tight_layout(w_pad=1,h_pad=10, rect=[0, 0.05, 1, 0.95])
     plt.show()
+    fig.savefig(rf'.\png\refined_{data}.pdf', format="pdf", bbox_inches="tight",transparent=True)
 
 if __name__ == '__main__':
-    print(args.index)
     refine_plot(args.data, args.input_size, args.output_size, args.index)

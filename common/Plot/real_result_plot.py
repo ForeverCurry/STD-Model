@@ -4,13 +4,13 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-
+from common.Plot.plot import PlotMeta
 #Define font style for plot title
 title_font = {'family': 'serif', 'color':  'black', 'size': 20}
 sns.set_style('white')
-sns.set_palette('Set1')
+sns.set_palette('husl')
 data_path = r'.\results' 
-linewidth = [1.5,2,1,1,1]
+
 
 #Load data from CSV files into dataframes
 mve_wind1 = pd.read_csv(os.path.join(data_path,rf'Osaka\MVE_ref_Osaka.csv'))
@@ -79,32 +79,32 @@ y_true = [y_true_weather,y_true_n3,y_true_n11,y_true_wind1,y_true_wind2]
 
 label = ['STD','MVE','ARNN','RDE']
 linestyle = ['solid','dashed','dotted','dashdot']
-alphas=(0.6,0.6,0.6,1)
+
 for k,results in enumerate((weather,N4,N12,wind1,wind2)):
 
-    sns.lineplot(x=np.arange(input_size[k],input_size[k]+output_size[k]),y=y_true[k].iloc[-output_size[k]:],
-                    ax=axes[k//3*3+k%3],linewidth=linewidth[0],label='Groudtruth',marker='.')
-    sns.lineplot(x=np.arange(0,input_size[k]+1),y=y_true[k].iloc[:input_size[k]+1],ax=axes[k//3*3+k%3],
-                    linewidth=linewidth[0],marker='.')
+    sns.lineplot(x=np.arange(input_size[k],input_size[k]+output_size[k]),y=y_true[k].iloc[-output_size[k]:],color=PlotMeta.color['gt'],
+                    ax=axes[k//3*3+k%3],linewidth=PlotMeta.linewidth,label='True values',marker='.',markersize=PlotMeta.markersize) 
+    sns.lineplot(x=np.arange(0,input_size[k]+1),y=y_true[k].iloc[:input_size[k]+1],ax=axes[k//3*3+k%3],color=PlotMeta.color['tr'],
+                    linewidth=PlotMeta.linewidth,marker='.',markersize=PlotMeta.markersize)
 
     for r,result in enumerate(results):
         if r==0:
-            sns.lineplot(x=np.arange(input_size[k],input_size[k]+output_size[k]),y=result.iloc[2*index[k]+1,-output_size[k]:],
-                     linewidth=linewidth[r+1],ax=axes[k//3*3+k%3],label=label[r],marker='.',alpha=alphas[r])
+            sns.lineplot(x=np.arange(input_size[k],input_size[k]+output_size[k]),y=result.iloc[2*index[k]+1,-output_size[k]:],color =PlotMeta.color['std'],
+                     linewidth=PlotMeta.linewidth,ax=axes[k//3*3+k%3],label=label[r],marker='.',markersize=PlotMeta.markersize)
         else:
             sns.lineplot(x=np.arange(input_size[k],input_size[k]+output_size[k]),y=result.iloc[2*index[k],-output_size[k]:],
-                    ax=axes[k//3*3+k%3],linewidth=linewidth[r+1],label=label[r],alpha=alphas[r],marker='.')
+                    ax=axes[k//3*3+k%3],linewidth=PlotMeta.linewidth,label=label[r],markersize=PlotMeta.markersize,alpha=0.6,marker='.')
     axes[k//3*3+k%3].yaxis.set_visible(False)
-    axes[k//3*3+k%3].legend(prop={'size':7,'family':'Serif'},
-                            fancybox=True, shadow=True,
-                            ncol=2)
+    axes[k//3*3+k%3].get_legend().set_visible(False)
     axes[k//3*3+k%3].set_xlim(xmin=0,xmax=input_size[k]+output_size[k]-1)
     axes[k//3*3+k%3].axvspan(0,input_size[k], color='blue', alpha=0.05)
+handles, labels = axes[0].get_legend_handles_labels()  
 fig = plt.gcf()
-fig.set_size_inches(16, 6)
-plt.tight_layout()
+fig.set_size_inches(16, 9)
+fig.legend(handles, labels, loc='lower center', ncol=5, prop={'size': 20, 'family': 'Serif'}, fancybox=True, shadow=True)
+plt.tight_layout(rect = (0.,0.08,1,1))
 plt.show()
-fig.savefig(r'.\png\result_real.pdf', format="pdf", bbox_inches="tight")
+fig.savefig(r'.\png\result_real.pdf', format="pdf", bbox_inches="tight",transparent=True)
 
 
 
