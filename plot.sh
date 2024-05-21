@@ -12,7 +12,13 @@ python ./common/Plot/coef_main.py
 #### Refine results
 python ./common/Plot/refine_main.py
 
-#### 
+#### Real-world dataset figure
+python ./common/Plot/real_result_plot.py 
+## Figure in SI
+
+#### Coefficient A figure
+python ./common/Plot/coef_plot.py
+
 #### Refine results plot in supplement material
 python ./common/Plot/refine_plot.py -d Lorenz -i 27 -o 12 -id 25 -id 35 -id 45 
 
