@@ -1,6 +1,18 @@
-#### Refine results in main text
-python ./common/Plot/refine_main_text.py
+## Figure in main text
 
+#### Noisy Lorenz system results
+python ./common/Plot/lorenz_main.py 
+
+#### Iteration process figure
+python ./common/Plot/itr_main.py
+
+#### Coefficient A figure
+python ./common/Plot/coef_main.py
+
+#### Refine results
+python ./common/Plot/refine_main.py
+
+#### 
 #### Refine results plot in supplement material
 python ./common/Plot/refine_plot.py -d Lorenz -i 27 -o 12 -id 25 -id 35 -id 45 
 
