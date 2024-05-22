@@ -1,5 +1,8 @@
 ## Figure in main text
 
+#### Boxplot 
+python ./common/Plot/boxplot.py
+
 #### Noisy Lorenz system results
 python ./common/Plot/lorenz_main.py 
 
