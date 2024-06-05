@@ -7,7 +7,7 @@ from scipy import special
 np.random.seed(20230823)
 
 
-def lorenz(vars, t, pars=[10., 28., 8/3]):
+def lorenz( t, y, pars=[10., 28., 8/3]):
     '''
     Lorenz system eqution：
     dx/dt = p(y-x)
@@ -17,7 +17,7 @@ def lorenz(vars, t, pars=[10., 28., 8/3]):
     :param vars: initial value of variables;
     :param pars: parameters of lorenz system;
     '''
-    x, y, z = vars
+    x, y, z = y
     p, q, r = pars
     dx_dt = p*(y-x)
     dy_dt = x*(q-z)-y
