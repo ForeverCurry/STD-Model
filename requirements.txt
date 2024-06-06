@@ -1,9 +1,7 @@
-argparse
-itertools
-matplotlib
-seaborn
-numpy
-scipy
-pandas
-torch
-statsforecast
+matplotlib==3.8.2
+seaborn==0.13.0
+numpy==1.23.4
+scipy==1.9.3
+pandas==1.4.4
+torch==1.9.1
+statsforecast==1.4.0
