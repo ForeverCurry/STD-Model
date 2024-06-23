@@ -98,8 +98,6 @@ class lorenz_coupled():
             if self.noise>0:
                 X = X+self.noise*np.random.randn(self.n,self.input_size)
             y = np.concatenate((X[self.target,:self.input_size],self.timeseries[self.target,sampled_point:sampled_point+self.output_size]))
-
-            sampled_point += self.output_size
             yield X, y
             
     def reset(self,):
