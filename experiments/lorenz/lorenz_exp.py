@@ -1,5 +1,6 @@
 import numpy as np
-np.random.seed(230823)
+from common.setting import SEED
+np.random.seed(SEED)
 from experiments.experiment import pre_exp,refine_exp
 from itertools import product
 from dataset.lorenz_sti import lorenz_coupled
@@ -9,16 +10,16 @@ import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 
 parser = argparse.ArgumentParser('Lorenz experiment')
-parser.add_argument('--lambda_1', type=list, default=[0.1,1,10],
+parser.add_argument('--lambda_1', type=list, default=[0,0.1,1,5],
                     help='Cross-validation parameter sets for lambda_1',)
-parser.add_argument('--lambda_2', type=list, default=[0.1,0.5,1], 
-                    help='Cross-validation parameter sets for lambda_1')
+parser.add_argument('--lambda_2', type=list, default=[0,0.1,1], 
+                    help='Cross-validation parameter sets for lambda_2')
 parser.add_argument('--noisy', type=float, default=0.5,
                     help='The variance of the noise')
 parser.add_argument('--in_feature', type=int, default=90,
                     help='Number of spatial dimension of data')
 parser.add_argument('--input_size', type=int, default=27,
-                    help='Number of training lengh')
+                    help='Number of training length)
 parser.add_argument('--output_size', type=int, default=12,
                     help='Number of prediction steps')
 parser.add_argument('--val_size', type=int, default=20,
@@ -28,10 +29,9 @@ parser.add_argument('--test_size', type=int, default=30,
 parser.add_argument('--target', type=int, default=20,
                     help='Index of target')
 parser.add_argument('--niters', type=int, default=100000,
-                    help='Maximum number of iterations')
+                    help='Maximum number of iterations)
 parser.add_argument('--epsilon', type=float, default=1e-5,
                     help='Value of difference when training will be stopped')
-# parser.add_argument('--warm', action='store_True', default=False)
 parser.add_argument('--refine',action='store_true', default=False,
                     help='If true')
 parser.add_argument('--refine_model', type=str, default=None,
