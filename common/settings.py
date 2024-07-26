@@ -10,4 +10,4 @@ EXPERIMENTS_PATH=os.path.join(STORAGE, 'experiments')
 RESULT_PATH=os.path.join(STORAGE,'results')
 TESTS_STORAGE_PATH=os.path.join(STORAGE, 'test')
 SAVE_PATH = os.path.join(STORAGE,"summary")
-SEED = 230823
+SEED :int = 230823
