@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from scipy.integrate import solve_ivp
 from scipy import special
-from common.setting import SEED
+from common.settings import SEED
 np.random.seed(SEED)
 
 
