@@ -64,7 +64,7 @@ if __name__ == '__main__':
         print(f'Target {args.target} of Lorenz:\nModel loss: {ave_loss:.4f}    |      PCC: {ave_pcc:.4f}')
         path = ['Lorenz\STD_Lorenz0.5.csv']
         title = ['Noisy Lorenz system']
-        plot_result(path, args.input_size, args.output_size, args.test_size, [[5,17,25]],
+        plot_result(path, args.input_size, args.output_size, args.test_size, [[4,10,17,26]],
                 title,save_path='png\lorenz_result.pdf')
 
     else:
