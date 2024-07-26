@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from common.setting import SEED
+from common.settings import SEED
 np.random.seed(SEED)
 from experiments.experiment import pre_exp,refine_exp
 from itertools import product
