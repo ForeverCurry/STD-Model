@@ -2,7 +2,7 @@ import os
 import argparse
 from experiments.experiment import pre_exp,refine_exp
 from itertools import product
-from dataset.plankton import planktonDataset
+from datasets.plankton import planktonDataset
 from common.sampler import Sampler
 from common.Plot.plot import plot_result
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
@@ -29,7 +29,7 @@ parser.add_argument('--niters', type=int, default=100000,
 parser.add_argument('--epsilon', type=float, default=1e-5,
                     help='Value of difference when training will be stopped')
 parser.add_argument('--refine',action='store_true', default=False,
-                    help='If true')
+                    help='If true, perform refinement experiment')
 parser.add_argument('--refine_model', type=str, default=None,
                     help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'ARNN','RDE']")
 args = parser.parse_args()
