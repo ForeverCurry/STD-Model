@@ -111,7 +111,7 @@ class STD(torch.nn.Module):
         update variable A by FISTA-based algorithm.
         '''
         A_ = self.lambda_1*self.Delta.T@self.Delta@self.A+(mask*(self.A@x-y))@x.T
-        A_ = self.B - self.tau*A_
+        A_ = self.B - 2*self.tau*A_
         A_ = soft_threshold(A_, self.tau*self.lambda_2)
         a_ = (1+torch.sqrt(1+4*torch.pow(self.a,2)))/2
         self.B.data = self.A+((self.a-1)/a_)*(A_-self.A)
