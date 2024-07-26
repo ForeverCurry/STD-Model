@@ -4,7 +4,7 @@ from common.settings import SEED
 np.random.seed(SEED)
 from experiments.experiment import pre_exp,refine_exp
 from itertools import product
-from dataset.lorenz_sti import lorenz_coupled
+from datasets.lorenz_sti import lorenz_coupled
 from common.Plot.plot import plot_result
 import argparse
 import os
