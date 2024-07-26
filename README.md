@@ -19,7 +19,7 @@ PyTorch implementation of STD can be found in `models/STD.py`
 #### Datasets
 The loaders for each dataset used in the paper are in `datasets/*.py`
 #### Demo
-The linear system experiment is shown in `linear_demo.ipynb`.
+The linear system experiment is shown in `Linear_demo.ipynb`.
 #### Experiments
 Experiments to reproduce the paper results are located in `experiments/*`, 
 where each experiment package contains `<data>/<data>_exp.py`. If you want to reproduce the results, 
