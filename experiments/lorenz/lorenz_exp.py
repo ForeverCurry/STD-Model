@@ -20,7 +20,7 @@ parser.add_argument('--noisy', type=float, default=0.5,
 parser.add_argument('--in_feature', type=int, default=90,
                     help='Number of spatial dimension of data')
 parser.add_argument('--input_size', type=int, default=27,
-                    help='Number of training length)
+                    help='Number of training length')
 parser.add_argument('--output_size', type=int, default=12,
                     help='Number of prediction steps')
 parser.add_argument('--val_size', type=int, default=20,
@@ -30,11 +30,11 @@ parser.add_argument('--test_size', type=int, default=30,
 parser.add_argument('--target', type=int, default=20,
                     help='Index of target')
 parser.add_argument('--niters', type=int, default=100000,
-                    help='Maximum number of iterations)
+                    help='Maximum number of iterations')
 parser.add_argument('--epsilon', type=float, default=1e-5,
                     help='Value of difference when training will be stopped')
 parser.add_argument('--refine',action='store_true', default=False,
-                    help='If true')
+                    help='If true, perform refinement experiment')
 parser.add_argument('--refine_model', type=str, default=None,
                     help="if refine=True, the refined model is in ['ETS','Theta', 'Arima', 'MVE', 'RDE', 'ARNN']")
 args = parser.parse_args()
