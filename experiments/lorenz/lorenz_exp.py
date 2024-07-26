@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from common.setting import SEED
 np.random.seed(SEED)
 from experiments.experiment import pre_exp,refine_exp
@@ -85,6 +86,8 @@ if __name__ == '__main__':
         temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
         pcc = sum(pccs[-args.test_size:])/args.test_size
         temp_pcc = sum(temp_pccs[-args.test_size:])/args.test_size
+        df = pd.DataFrame(data=nrmse, columns=['NRMSE'])
+        df.to_csv(f'./results/Lorenz/Lorenz_{args.noisy}_{args.input_size}_{args.refine_model}.csv', index=False)
         print(f'Target {args.target} of Lorenz: Model {args.refine_model}\
               \nOriginal loss: {temp_loss:.4f}    |      refined loss: {ref_loss:.4f}\
               \nOriginal PCC: {temp_pcc:.4f}    |      refined PCC: {pcc:.4f}')
