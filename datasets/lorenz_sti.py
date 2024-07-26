@@ -35,6 +35,7 @@ class lorenz_coupled():
                  input_size: int = 27,
                  output_size: int = 12,
                  noise:int=0.5,
+                 train:bool=True,
                  sigma: float = 10.0,
                  beta: float = 8.0/3.0,
                  rho: float = 28.0,
@@ -95,9 +96,12 @@ class lorenz_coupled():
         while True:
             sampled_point = self.sample_points[self.index]
             self.index += 1
-            X = self.timeseries[:, -self.input_size+sampled_point:sampled_point]
+            if self.train:
+                X = self.timeseries[:, -self.input_size+sampled_point:sampled_point]
+            else:
+                X = self.timeseries[:, -self.input_size+sampled_point:sampled_point+self.output_size]
             if self.noise>0:
-                X = X+self.noise*np.random.randn(self.n,self.input_size)
+                X = X+self.noise*np.random.randn(*X.shape)
             y = np.concatenate((X[self.target,:self.input_size],self.timeseries[self.target,sampled_point:sampled_point+self.output_size]))
             yield X, y
             
