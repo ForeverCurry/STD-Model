@@ -4,7 +4,8 @@ import numpy as np
 import pandas as pd
 from scipy.integrate import solve_ivp
 from scipy import special
-np.random.seed(20230823)
+from common.setting import SEED
+np.random.seed(SEED)
 
 
 def lorenz( t, y, pars=[10., 28., 8/3]):
@@ -104,5 +105,6 @@ class lorenz_coupled():
         '''
         Reinitialize the sampling points index 
         '''
+        np.random.seed(SEED)
         self.index = 0
         
