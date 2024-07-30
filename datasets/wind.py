@@ -17,7 +17,7 @@ class WindDataset:
         Load wind dataset.
         """
         data = pd.read_csv(os.path.join(DATASET_PATH,'winddata.csv'),
-                          header=0, delimiter=",",index_col=0)
+                          header=0, delimiter=",")
         return data
 
 
