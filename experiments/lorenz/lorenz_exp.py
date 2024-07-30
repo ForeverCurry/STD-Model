@@ -11,9 +11,9 @@ import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 
 parser = argparse.ArgumentParser('Lorenz experiment')
-parser.add_argument('--lambda_1', type=list, default=[0,0.1,1,5],
+parser.add_argument('--lambda_1', type=list, default=[0.1,1],
                     help='Cross-validation parameter sets for lambda_1',)
-parser.add_argument('--lambda_2', type=list, default=[0,0.1,1], 
+parser.add_argument('--lambda_2', type=list, default=[0.1,1], 
                     help='Cross-validation parameter sets for lambda_2')
 parser.add_argument('--noisy', type=float, default=0.5,
                     help='The variance of the noise')
@@ -80,7 +80,7 @@ if __name__ == '__main__':
                     output_size = args.output_size, dataset=training_set, base_model=args.refine_model)
         
         ### refine
-        # nrmse, temp_nrmse = exp.test(size=args.test_size+args.val_size, save=f'Lorenz{args.noisy}')
+        # nrmse, temp_nrmse, pccs, temp_pccs = exp.test(size=args.test_size+args.val_size, save=f'Lorenz{args.noisy}')
         nrmse, temp_nrmse , pccs, temp_pccs = exp.test(size=args.test_size+args.val_size)
         ref_loss = sum(nrmse[-args.test_size:])/args.test_size
         temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
