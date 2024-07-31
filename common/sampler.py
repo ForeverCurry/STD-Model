@@ -28,12 +28,8 @@ class Sampler():
         self.output_size = output_size
         self.test_length = 2*output_size
         self.train_length = self.timeseries.shape[1]-self.test_length
-        if pretrain:
-            self.start_index = self.length//2
-            self.stop_index = self.train_length
-        else:
-            self.start_index = self.input_size
-            self.stop_index = self.train_length
+        self.start_index = self.input_size
+        self.stop_index = self.train_length
     def __iter__(self):
         '''
         return: 
@@ -43,20 +39,17 @@ class Sampler():
         # sequential sampling
         self.sample_index = self.start_index
         while True:
-            X = self.timeseries[:, -self.input_size +self.sample_index:self.sample_index]
+            if self.pretrain:
+                X = self.timeseries[:, -self.input_size +self.sample_index:self.sample_index]
+            else:
+                X = self.timeseries[:, -self.input_size +self.sample_index:self.sample_index+self.output_size]
             y = self.target_data[self.sample_index-self.input_size:
                                     self.sample_index+self.output_size]
-            if self.pretrain:
-                if self.sample_index <= self.stop_index:
-                    self.sample_index += self.output_size
-                else:
-                    print('------training end---------')
-                    raise StopIteration
+
+            if self.sample_index <= self.stop_index:
+                self.sample_index += self.output_size
             else:
-                if self.sample_index <=self.stop_index:
-                    self.sample_index += self.output_size
-                else:
-                    self.sample_index = self.start_index
+                self.sample_index = self.start_index
             yield X,  y
             
     def reset(self):
