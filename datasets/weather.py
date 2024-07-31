@@ -6,7 +6,7 @@ from common.settings import DATASETS_PATH
 
 DATASET_PATH = os.path.join(DATASETS_PATH, 'weather')
 
-# @dataclass()
+@dataclass()
 class weatherDataset:
     @staticmethod
     def load(downsample = True) :
