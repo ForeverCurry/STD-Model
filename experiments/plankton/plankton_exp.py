@@ -10,7 +10,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 parser = argparse.ArgumentParser('plankton experiments')
 parser.add_argument('--lambda_1', type=list, default=[0.01,0.1,1],
                     help='Cross-validation parameter sets for lambda_1',)
-parser.add_argument('--lambda_2', type=list, default=[0.01,0.05,0.1], 
+parser.add_argument('--lambda_2', type=list, default=[0.01,0.1], 
                     help='Cross-validation parameter sets for lambda_1')
 parser.add_argument('--in_feature', type=int, default=12,
                     help='Number of spatial dimension of data')
