@@ -4,7 +4,6 @@ from experiments.experiment import pre_exp,refine_exp
 from datasets.wind import WindDataset
 from itertools import product
 from common.sampler import Sampler
-from common.Plot.plot import plot_result
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 
 parser = argparse.ArgumentParser('weather experiment')
@@ -42,7 +41,6 @@ if __name__ == '__main__':
     dict = {105:'Osaka', 24:'Fukushima'}
     
     if not args.refine:
-        path = []
         print(args.target)
         for target in args.target:
             #### Load data
@@ -59,11 +57,7 @@ if __name__ == '__main__':
             nrmse, pcc = exp.test(best_par, size=args.test_size+args.val_size, save=dict[target])
             ave_loss = sum(nrmse[-args.test_size:])/args.test_size
             print(f'Average loss of {dict[target]} is {ave_loss}')
-            path.append(f'.\{dict[target]}\STD_{dict[target]}.csv')
-        ### Plot results
-        titles = ['Osaka wind speed','Fukushima wind speed']
-        plot_result(path, args.input_size, args.output_size, args.test_size, [[5,25,35],[5,20,45]],
-            titles,save_path='png\wind_result.pdf')
+
     else:
         #### load data
         assert args.refine_model in ['ETS', 'Theta','Arima', 'MVE','RDE', 'ARNN']
