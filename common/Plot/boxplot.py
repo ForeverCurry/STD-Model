@@ -6,10 +6,12 @@ sns.set_style('whitegrid')
 import matplotlib.pyplot as plt
 from common.settings import RESULT_PATH
 from common.Plot.plot import PlotMeta
+
 names =['length', 'noisy']
 methods = [ 'STD','RDE','MVE','Theta','ETS','Arima','ARNN',]
 nrmses = [[],[]]
 test_size=30
+
 # load data
 for i, name in enumerate(names):
     for j, method in enumerate(methods):
@@ -44,8 +46,7 @@ axes[1].set_xlabel("Noise level",fontdict=PlotMeta.title_font)
 handles, labels = axes[1].get_legend_handles_labels()
 fig.legend(handles, labels, loc='lower center', ncol=len(methods), bbox_to_anchor=(0.5, 0.05),prop={'size':20,'family':'Serif'})
 
-# 显示图形
+# Plot show
 plt.tight_layout(rect=(0,0.1,1,0.95))
-# fig.savefig(fr"D:\ML\Time_series\mymodel\png\robust_{name2}.png",transparent=True)
 fig.savefig(r"./png/robust.pdf", format="pdf", bbox_inches="tight",transparent=True)
 plt.show()
