@@ -58,7 +58,8 @@ class lorenz_coupled():
         self.target = int(target)
         self.input_size = input_size
         self.output_size = output_size
-        self.noise=noise
+        self.noise = noise
+         self.train = train
         self.sigma = sigma
         self.beta = beta
         self.rho = rho
