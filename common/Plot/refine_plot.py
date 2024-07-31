@@ -22,13 +22,13 @@ sns.set_palette('Set1')
 
 def refine_plot(data, input_size, output_size, index:list, linewidth:float=1.5):
     #Load data from CSV files into dataframes
-    theta = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\theta_ref_{data}0.5.csv'))
-    ets = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\ETS_ref_{data}0.5.csv'))
-    arima = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\ARIMA_ref_{data}0.5.csv'))
-    mve = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\MVE_ref_{data}0.5.csv'))
-    arnn = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\ARNN_ref_{data}0.5.csv'))
+    theta = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\theta_ref_{data}.csv'))
+    ets = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\ETS_ref_{data}.csv'))
+    arima = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\ARIMA_ref_{data}.csv'))
+    mve = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\MVE_ref_{data}.csv'))
+    arnn = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\ARNN_ref_{data}.csv'))
     std = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\STD_{data}.csv'))
-    RDE = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\RDE_ref_{data}0.5.csv'))
+    RDE = pd.read_csv(os.path.join(RESULT_PATH,rf'{data}\RDE_ref_{data}.csv'))
     dataset = [ets, arima, theta, mve, arnn,RDE]
 
 
