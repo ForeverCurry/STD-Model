@@ -15,7 +15,7 @@ class weatherDataset:
 
         :param training: Load training part if training is True, test part otherwise.
         """
-        data = pd.read_csv(os.path.join(DATASET_PATH,'weather3.csv'),header=0,index_col=0)
+        data = pd.read_csv(os.path.join(DATASET_PATH,'weather.csv'),header=0,index_col=0)
         data.index = pd.to_datetime(data.index)
         if downsample:
             data = data.resample('12h').mean()
