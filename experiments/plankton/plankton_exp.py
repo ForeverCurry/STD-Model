@@ -43,7 +43,6 @@ if __name__ == '__main__':
 
     if not args.refine:
         #### Training model
-        path = []
         for target in args.target:
             training_set = Sampler(training_values, args.input_size, args.output_size, target)
             exp = pre_exp(target=target, in_feature=args.in_feature, input_size=args.input_size,
@@ -58,9 +57,7 @@ if __name__ == '__main__':
             ave_loss = sum(nrmse[-args.test_size:])/args.test_size
             pcc = sum(pccs[-args.test_size:])/args.test_size
             print(f'Average loss of target {target} of plankton is {ave_loss} and pcc is {pcc}')
-            path.append(f'./N{target+1}/STD_N{target+1}.csv')
-        titles = [f'PlanktonN{target+1}' for target in args.target]
-        plot_result(path, args.input_size, args.output_size, args.test_size, titles, './png/plankton.pdf')
+
     else:
         assert args.refine_model in ['ETS', 'Theta', 'Arima', 'MVE', 'ARNN','RDE']
         for target in args.target:
