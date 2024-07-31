@@ -18,15 +18,15 @@ ticker2_font = {'family': 'Serif', 'color':  'black', 'size': 16,
                 'fontstyle': 'italic'}
 
 #Load data
-MVE_result = pd.read_csv(os.path.join(RESULT_PATH,'Lorenz\MVE_ref_Lorenz.csv'))
+MVE_result = pd.read_csv(os.path.join(RESULT_PATH,'Lorenz\MVE_ref_Lorenz0.5.csv'))
 STD_result = pd.read_csv(os.path.join(RESULT_PATH,'Lorenz\STD_Lorenz.csv'))
-RDE_result = pd.read_csv(os.path.join(RESULT_PATH,'Lorenz\RDE_ref_Lorenz.csv'))
-arnn_result = pd.read_csv(os.path.join(RESULT_PATH,'Lorenz\ARNN_ref_Lorenz.csv'))
+RDE_result = pd.read_csv(os.path.join(RESULT_PATH,'Lorenz\RDE_ref_Lorenz0.5.csv'))
+arnn_result = pd.read_csv(os.path.join(RESULT_PATH,'Lorenz\ARNN_ref_Lorenz0.5.csv'))
 
 # Define the data information
 input_size= 27
 output_size=12
-index=[22,35,39]
+index=[22,39,43]
 
 
 plt.close()
