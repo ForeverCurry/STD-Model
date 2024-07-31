@@ -5,7 +5,6 @@ np.random.seed(SEED)
 from experiments.experiment import pre_exp,refine_exp
 from itertools import product
 from datasets.lorenz_sti import lorenz_coupled
-from common.Plot.plot import plot_result
 import argparse
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
@@ -63,10 +62,6 @@ if __name__ == '__main__':
         ave_loss = sum(nrmse[-args.test_size:])/args.test_size
         ave_pcc = sum(pccs[-args.test_size:])/args.test_size
         print(f'Target {args.target} of Lorenz:\nModel loss: {ave_loss:.4f}    |      PCC: {ave_pcc:.4f}')
-        path = ['Lorenz\STD_Lorenz0.5.csv']
-        title = ['Noisy Lorenz system']
-        plot_result(path, args.input_size, args.output_size, args.test_size, [[4,10,17,26]],
-                title,save_path='png\lorenz_result.pdf')
 
     else:
         assert args.refine_model in ['ETS', 'Theta', 'Arima', 'MVE', 'RDE', 'ARNN']
