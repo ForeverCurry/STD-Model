@@ -33,7 +33,3 @@ python ./common/Plot/refine_plot.py -d N12 -i 10 -o 4 -id 28 -id 35 -id 40
 python ./common/Plot/refine_plot.py -d Osaka -i 48 -o 12 -id 50 -id 80 -id 90
 
 python ./common/Plot/refine_plot.py -d Fukushima -i 48 -o 12 -id 50 -id 80 -id 90
-
-#### real_world results plot 
-
-python ./common/Plot/real_result_plot.py
