@@ -11,8 +11,8 @@ from common.Plot.plot import PlotMeta
 fig, axes = plt.subplots(2, 4, figsize=(20, 10),sharex=True)
 input_size = 27
 output_size = 12
-index = [35, 39]
-itrs = [[10, 500, 1000, 2000],[10,500,1000,2000]]
+index = [39,43]
+itrs = [[10, 100, 200, 320],[10,20,50,80]]
 label=['STD pridictions', 'True values', 'STD fitting curve', 'Noisy input']
 y = pd.read_csv('./results/Lorenz/STD_Lorenz.csv')
 for i, id in enumerate(index):
