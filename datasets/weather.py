@@ -1,18 +1,15 @@
 import os
 from dataclasses import dataclass
 
-import numpy as np
 import pandas as pd
-import patoolib
 from common.settings import DATASETS_PATH
 
 DATASET_PATH = os.path.join(DATASETS_PATH, 'weather')
 
 # @dataclass()
 class weatherDataset:
-
     @staticmethod
-    def load(training: bool = True, downsample = True, step : int=6) :
+    def load(downsample = True) :
         """
         Load Weather dataset.
 
