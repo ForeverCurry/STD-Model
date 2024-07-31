@@ -12,7 +12,7 @@ cmap = sns.diverging_palette(230, 20, as_cmap=True)
 fig, axes = plt.subplots(2, 2, figsize=(20, 10),sharey=True,sharex=True)
 y_label = []
 x_label = []
-index = [22,35,39,45]
+index = [25,35,39,45]
 
 for i in range(90):
     if i != 20:
