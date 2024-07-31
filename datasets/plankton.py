@@ -1,9 +1,6 @@
 import os
 from dataclasses import dataclass
-
-import numpy as np
 import pandas as pd
-import patoolib
 from common.settings import DATASETS_PATH
 
 DATASET_PATH = os.path.join(DATASETS_PATH, 'plankton')
@@ -12,7 +9,7 @@ DATASET_PATH = os.path.join(DATASETS_PATH, 'plankton')
 class planktonDataset:
 
     @staticmethod
-    def load(training: bool = True, step : int=6) :
+    def load() :
         """
         Load Plankton dataset.
 
