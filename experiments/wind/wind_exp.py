@@ -41,7 +41,7 @@ if __name__ == '__main__':
     dict = {105:'Osaka', 24:'Fukushima'}
     
     if not args.refine:
-        print(args.target)
+        print(f'Traiing model for {dict[args.target[0]]} and {dict[args.target[1]]}')
         for target in args.target:
             #### Load data
             training_set = Sampler(train_set, args.input_size, args.output_size, target=target)
@@ -56,14 +56,14 @@ if __name__ == '__main__':
             ### Test
             nrmse, pcc = exp.test(best_par, size=args.test_size+args.val_size, save=dict[target])
             ave_loss = sum(nrmse[-args.test_size:])/args.test_size
-            print(f'Average loss of {dict[target]} is {ave_loss}')
+            print(f'Average loss of {dict[target]} is {ave_loss} with bet parameters {best_par}')
 
     else:
         #### load data
         assert args.refine_model in ['ETS', 'Theta','Arima', 'MVE','RDE', 'ARNN']
         for target in args.target:
             if args.refine_model == 'MVE':
-                training_set = Sampler(train_set, args.input_size, args.output_size, target=target, train=False)
+                training_set = Sampler(train_set, args.input_size, args.output_size, target=target, pretrain=False)
             else:
                 training_set = Sampler(train_set, args.input_size, args.output_size, target=target)
             ### Load refined model
