@@ -53,7 +53,7 @@ if __name__ == '__main__':
             best_par = exp.val(hyper,size=args.val_size)
 
             # Test
-            nrmse, pccs = exp.test(best_par, size=args.test_size+args.val_size, save=f'N{args.target+1}')
+            nrmse, pccs = exp.test(best_par, size=args.test_size+args.val_size, save=f'N{target+1}')
             ave_loss = sum(nrmse[-args.test_size:])/args.test_size
             pcc = sum(pccs[-args.test_size:])/args.test_size
             print(f'Average loss of target {target} of plankton is {ave_loss} and pcc is {pcc}')
