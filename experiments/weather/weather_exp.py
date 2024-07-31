@@ -62,7 +62,7 @@ if __name__ == '__main__':
         assert args.refine_model in ['ETS', 'Theta', 'Arima', 'MVE', 'RDE', 'ARNN']
         if args.refine_model == 'MVE':
             training_set = Sampler(training_set, args.input_size, args.output_size, target=args.target,
-                                  train=False)
+                                  pretrain=False)
         else:
             training_set = Sampler(training_set, args.input_size, args.output_size, target=args.target)
         exp = refine_exp(target=args.target,in_feature=args.in_feature, input_size=args.input_size,
