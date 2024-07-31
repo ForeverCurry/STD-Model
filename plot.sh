@@ -12,11 +12,10 @@ python ./common/Plot/itr_main.py
 #### Coefficient A figure
 python ./common/Plot/coef_main.py
 
-#### Refine results
-python ./common/Plot/refine_main.py
-
 #### Real-world dataset figure
 python ./common/Plot/real_result_plot.py 
+
+
 ## Figure in SI
 
 #### Coefficient A figure
