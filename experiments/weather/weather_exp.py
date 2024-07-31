@@ -28,8 +28,6 @@ parser.add_argument('--niters', type=int, default=100000,
                     help='Maximum number of iterations')
 parser.add_argument('--epsilon', type=float, default=1e-5,
                     help='Value of difference when training will be stopped')
-parser.add_argument('--warm',action='store_true', default=False,
-                    help='If true,')
 parser.add_argument('--refine',action='store_true', default=False,
                     help='If true, perform refinement experiment')
 parser.add_argument('--refine_model', type=str, default=None,
@@ -48,7 +46,7 @@ if __name__ == '__main__':
         training_set = Sampler(training_set, args.input_size, args.output_size, target=args.target)
         #### Training model
         exp = pre_exp(target=args.target, in_feature=args.in_feature, input_size=args.input_size,
-                    output_size = args.output_size, dataset=training_set, warm=args.warm)
+                    output_size = args.output_size, dataset=training_set, warm=True)
         
         ### Cross validation
         hyper = product(args.lambda_1,args.lambda_2)
@@ -59,8 +57,7 @@ if __name__ == '__main__':
         ave_loss = sum(nrmse[-args.test_size:])/args.test_size
         ave_pcc = sum(pccs[-args.test_size:])/args.test_size
         print(f'Average loss of operative temperature is {ave_loss:.4f} and pcc is {ave_pcc:.4f}')
-        titles = [f'Operative temperature ']
-        plot_result('./weather/STD_weather.csv', args.input_size, args.output_size, args.test_size, titles, './png/plankton.pdf')
+
     else:
         assert args.refine_model in ['ETS', 'Theta', 'Arima', 'MVE', 'RDE', 'ARNN']
         if args.refine_model == 'MVE':
