@@ -7,6 +7,8 @@ STD model is used for short-term high-dimension multi-step time series predictio
 <!-- ![N-BEATS Architecture](nbeats.png) -->
 
 ## Preparation
+Requirement : `python 3.9.18`
+
 Install pytorch and other necessary dependencies.
 
 `pip install -r requirements.txt`
