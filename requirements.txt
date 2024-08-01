@@ -6,3 +6,4 @@ pandas==1.4.4
 torch==1.9.1
 pyEDM==1.13.1.0
 statsforecast==1.4.0
+openpyxl==3.0.10
