@@ -69,7 +69,7 @@ if __name__ == '__main__':
                         output_size = args.output_size, dataset=training_set, base_model=args.refine_model)
             
             ### refine
-            nrmse, temp_nrmse = exp.test(size=args.test_size+args.val_size, save=f'N{target+1}')
+            nrmse, temp_nrmse, pccs, temp_pccs  = exp.test(size=args.test_size+args.val_size, save=f'N{target+1}')
             ref_loss = sum(nrmse[-args.test_size:])/args.test_size
             temp_loss = sum(temp_nrmse[-args.test_size:])/args.test_size
             print(f'target {target} of plankton: Model {args.refine_model}\nOriginal loss: {temp_loss:.4f}     |      refined loss: {ref_loss:.4f}')
