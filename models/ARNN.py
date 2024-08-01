@@ -9,7 +9,7 @@ class ARNN(torch.torch.nn.Module):
     def __init__(self,
                  output_size: int,
                  x: torch.Tensor,
-                 target: int,
+                 target,
                  iter: int=50,
                  out_feature: int=128,
                  random_transform: bool=True):
@@ -21,7 +21,13 @@ class ARNN(torch.torch.nn.Module):
         else:
             self.noisy_x = x
         self.d, self.input_size = x.shape
-        self.train_y = self.noisy_x[target, :]
+        if isinstance(target, int):
+            self.train_y = self.noisy_x[target, :]
+        else:
+            if not torch.is_tensor(target):
+                self.train_y = torch.from_numpy(target).type(torch.float32)
+            else:
+                self.train_y = target
         self.hankel_y, self.y_mask = self.generate_hankel(self.train_y)  # shape:L*m
         if random_transform:   
             model = basisnet(self.d, self.input_size, out_feature).float()
