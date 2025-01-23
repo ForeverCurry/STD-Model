@@ -2,7 +2,7 @@ import torch
 from common.losses import nrmse_loss
 from common.ops import initialize_weights
 
-class ARNN(torch.torch.nn.Module):
+class ARNN(torch.nn.Module):
     '''
     ARNN algorithm for time series prediction.
     '''
