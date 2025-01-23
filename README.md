@@ -1,6 +1,6 @@
 # STD Model
 
-This repository contains the code for the paper SpatioTemporal Diffusion with Koopman operator for short-term time-series prediction. Feel free to star this repository and cite our papers if you find it useful for your research. You can find the citation details below
+This repository contains the code for the paper “SpatioTemporal Diffusion with Koopman operator for short-term time-series prediction”. Feel free to star this repository and cite our papers if you find it useful for your research. You can find the citation details below
 
 STD model is used for short-term high-dimension multi-step time series prediction based on the Koopman operator. In addition to its prediction capabilities, our STD method can also be used as a post-processing tool for refining other time-series models to improve multi-step prediction performance effectively.
 
