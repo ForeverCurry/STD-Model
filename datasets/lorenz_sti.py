@@ -69,7 +69,7 @@ class lorenz_coupled():
             start=start, stop=stop, t=t, x=x).y
         self.test_length = 5*output_size
         self.train_length = self.timeseries.shape[1]-self.test_length
-        self.sample_points = pd.read_csv(r'.\datasets\lorenz\sample_points.csv',
+        self.sample_points = pd.read_csv(r'./datasets/lorenz/sample_points.csv',
                                          index_col=None,header=None).values.squeeze()
         self.index = 0
         
